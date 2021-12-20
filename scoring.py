@@ -31,14 +31,11 @@ def score_model():
         )
     #this function should take a trained model, load test data, and calculate an F1 score for the model relative to the test data
     #it should write the result to the latestscore.txt file
-    for file in os.listdir(os.getcwd()+'/'+model_path+'/'):
-        counter = 1
-        if file.endswith('.pkl'):
-            if counter > 1:
-                print('There are multiple models in the directory, just one taken')
-                break
-            model = pickle.load(open(os.getcwd()+'/'+model_path+'/trainedmodel.pkl', 'rb'))
-            counter += 1
+    files = [os.getcwd()+'/'+model_path+'/'+file for file in os.listdir(os.getcwd()+'/'+model_path+'/') if file.endswith('.pkl')]
+    if len(files) > 1:
+        print('There are multiple models in the directory, just the latest one is taken')
+    latest_file = max(files, key=os.path.getctime)
+    model = pickle.load(open(latest_file, 'rb'))
 
     
     for file in os.listdir(os.getcwd()+'/'+test_data_path+'/'):
@@ -55,7 +52,7 @@ def score_model():
     scores = metrics.f1_score(y_test, predictions)
 
     if os.path.isdir(os.getcwd()+'/'+model_path):
-        with open(os.getcwd()+'/'+model_path+'/'+'latestscore.txt', 'w') as f:
+        with open(os.getcwd()+'/'+model_path+'/'+'latestscore.txt','w') as f:
             f.write(str(scores))
     else:
         os.mkdir(os.getcwd()+'/'+model_path)

@@ -2,6 +2,7 @@ from flask import Flask, session, jsonify, request
 import pandas as pd
 import numpy as np
 import pickle
+import shutil
 import os
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
@@ -21,7 +22,7 @@ prod_deployment_path = os.path.join(config['prod_deployment_path'])
 ####################function for deployment
 def store_model_into_pickle(model):
     #copy the latest pickle file, the latestscore.txt value, and the ingestfiles.txt file into the deployment directory
-        
+    
         
         
 
