@@ -20,7 +20,7 @@ prod_path = os.path.join(config['prod_deployment_path'])
 def model_predictions(dataset):
     for file in os.listdir(os.getcwd()+'/'+prod_path):
         if file.endswith('.pkl'):
-            model = pickle.load(os.getcwd()+'/'+prod_path+'/'+file)
+            model = pickle.load(open(os.getcwd()+'/'+prod_path+'/'+file,'rb'))
     predictions = model.predict(dataset)
     return predictions
 

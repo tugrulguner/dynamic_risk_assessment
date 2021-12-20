@@ -36,7 +36,6 @@ def score_model():
         print('There are multiple models in the directory, just the latest one is taken')
     latest_file = max(files, key=os.path.getctime)
     model = pickle.load(open(latest_file, 'rb'))
-
     
     for file in os.listdir(os.getcwd()+'/'+test_data_path+'/'):
         if file.endswith('.csv'):
