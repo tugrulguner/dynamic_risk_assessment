@@ -34,20 +34,19 @@ def merge_multiple_dataframe():
         except pd.errors.EmptyDataError:
             continue
     
-    # Drop duplicated and na values
+    # Drop duplicated 
     df.drop_duplicates(inplace=True, ignore_index=True)
-    df.dropna(inplace=True)
 
     # Create output folder if not exist and save files
     if os.path.isdir(os.getcwd()+'/'+output_folder_path):
         df.to_csv(os.getcwd()+'/'+output_folder_path+'/finaldata.csv', index = False)
-        with open(os.getcwd()+'/'+output_folder_path+'/ingestedfiles.txt', 'wb') as f:
+        with open(os.getcwd()+'/'+output_folder_path+'/ingestedfiles.txt', 'w') as f:
             for el in ingestedlist:
                 f.write(el+'\n')
     else:
         os.mkdir(os.getcwd()+'/'+output_folder_path)
         df.to_csv(os.getcwd()+'/'+output_folder_path+'/finaldata.csv', index=False)
-        with open(os.getcwd()+'/'+output_folder_path+'/ingestedfiles.txt', 'wb') as f:
+        with open(os.getcwd()+'/'+output_folder_path+'/ingestedfiles.txt', 'w') as f:
             for el in ingestedlist:
                 f.write(el+'\n')
 
