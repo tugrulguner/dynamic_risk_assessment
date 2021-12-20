@@ -18,9 +18,19 @@ output_folder_path = config['output_folder_path']
 
 #############Function for data ingestion
 def merge_multiple_dataframe():
-    #check for datasets, compile them together, and write to an output file
-
-
+    df = pd.DataFrame(columns=['corporation','lastmonth_activity','lastyear_activity','number_of_employees','exited'])
+    for file in os.listdir(os.getcwd()+'/'+input_folder_path):
+        try:
+            read_data = pd.read_csv(os.getcwd()+'/'+input_folder_path+'/'+file)
+            df = df.append(read_data).reset_index(drop=True)
+        except pd.errors.EmptyDataError:
+            continue
+    
+    if os.path.isdir(os.getcwd()+'/'+output_folder_path):
+        df.to_csv(os.getcwd()+'/'+output_folder_path+'/finaldata.csv')
+    else:
+        os.mkdir(os.getcwd()+'/'+output_folder_path)
+        df.to_csv(os.getcwd()+'/'+output_folder_path+'/finaldata.csv')
 
 if __name__ == '__main__':
     merge_multiple_dataframe()
