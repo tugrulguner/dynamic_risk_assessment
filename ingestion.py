@@ -17,7 +17,7 @@ output_folder_path = config['output_folder_path']
 
 
 #############Function for data ingestion
-def merge_multiple_dataframe():
+def merge_multiple_dataframe(input_folder_path):
     ingestedlist = []
     df = pd.DataFrame(
         columns=['corporation',
@@ -51,4 +51,4 @@ def merge_multiple_dataframe():
                 f.write(el+'\n')
 
 if __name__ == '__main__':
-    merge_multiple_dataframe()
+    merge_multiple_dataframe(input_folder_path)
