@@ -22,7 +22,7 @@ def model_predictions(dataset):
         if file.endswith('.pkl'):
             model = pickle.load(open(os.getcwd()+'/'+prod_path+'/'+file,'rb'))
     predictions = model.predict(dataset)
-    return predictions
+    return str(predictions)
 
 ##################Function to get summary statistics
 def dataframe_summary():
@@ -45,6 +45,7 @@ def dataframe_summary():
     nan_perc = data.isna().sum()/data.shape[0]
     print('summary statistics: ', summary_statistics)
     print('Nan values percentage: ', nan_perc)
+    return str([summary_statistics, nan_perc])
 
 #################Function to get timings
 def execution_time():
@@ -58,18 +59,19 @@ def execution_time():
     ingestion_time = timeit.default_timer()-ingestion_time_st
 
     print([training_time, ingestion_time])
+    return str([training_time, ingestion_time])
 
 ##################Function to check dependencies
 def outdated_packages_list():
     outdated = subprocess.run(['pip','list','--outdated'])
-    print(outdated)
+    return outdated
 
 
-if __name__ == '__main__':
-    model_predictions()
-    dataframe_summary()
-    execution_time()
-    outdated_packages_list()
+# if __name__ == '__main__':
+#     model_predictions()
+#     dataframe_summary()
+#     execution_time()
+#     outdated_packages_list()
 
 
 

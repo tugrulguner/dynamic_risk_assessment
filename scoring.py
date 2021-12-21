@@ -57,6 +57,7 @@ def score_model():
         os.mkdir(os.getcwd()+'/'+model_path)
         with open(os.getcwd()+'/'+model_path+'/'+'latestscore.txt', 'w') as f:
             f.write(str(scores))
+    return str(scores)
     
-if __name__ == '__main__':
-    score_model()
+# if __name__ == '__main__':
+#     score_model()

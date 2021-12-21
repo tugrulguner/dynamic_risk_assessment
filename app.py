@@ -2,12 +2,10 @@ from flask import Flask, session, jsonify, request
 import pandas as pd
 import numpy as np
 import pickle
-import create_prediction_model
-import diagnosis 
-import predict_exited_from_saved_model
 import json
 import os
-
+import diagnostics
+from scoring import score_model
 
 
 ######################Set up variables for use in our script
@@ -18,33 +16,38 @@ with open('config.json','r') as f:
     config = json.load(f) 
 
 dataset_csv_path = os.path.join(config['output_folder_path']) 
+test_data_path = os.path.join(config['test_data_path']) 
 
 prediction_model = None
 
 
 #######################Prediction Endpoint
 @app.route("/prediction", methods=['POST','OPTIONS'])
-def predict():        
-    #call the prediction function you created in Step 3
-    return #add return value for prediction outputs
+def predict():
+    input_data = request.get_json('path')
+    test_data = pd.read_csv(input_data)
+    y = test_data.pop('exited').astype(int)
+    X = test_data[['lastmonth_activity','lastyear_activity','number_of_employees']]
+    predictions = diagnostics.model_predictions(X)
+    return predictions
 
 #######################Scoring Endpoint
 @app.route("/scoring", methods=['GET','OPTIONS'])
-def stats():        
-    #check the score of the deployed model
-    return #add return value (a single F1 score number)
+def scoring():        
+    score = score_model()
+    return str(score)
 
 #######################Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
 def stats():        
-    #check means, medians, and modes for each column
-    return #return a list of all calculated summary statistics
+    df_summary = diagnostics.dataframe_summary()
+    return str(df_summary)
 
 #######################Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])
-def stats():        
-    #check timing and percent NA values
-    return #add return value for all diagnostics
+def exec_time():        
+    exec_time = diagnostics.execution_time()
+    return str(exec_time)
 
 if __name__ == "__main__":    
     app.run(host='0.0.0.0', port=8000, debug=True, threaded=True)
