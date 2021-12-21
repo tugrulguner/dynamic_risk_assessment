@@ -13,10 +13,10 @@ with open('config.json','r') as f:
 test_data_path = os.path.join(config['test_data_path']) 
 path = json.dumps(os.getcwd()+'/'+test_data_path+'/'+'testdata.csv')
 #Call each API endpoint and store the responses
-response1 = requests.post(URL+'prediction', data=path).content
-response2 = requests.get(URL+'scoring').content
-response3 = requests.get(URL+'diagnostics').content
-response4 = requests.get(URL+'summarystats').content
+response1 = requests.post(URL+'prediction', data=path).text
+response2 = requests.get(URL+'scoring').text
+response3 = requests.get(URL+'diagnostics').text
+response4 = requests.get(URL+'summarystats').text
 
 print(response1)
 #combine all API responses
