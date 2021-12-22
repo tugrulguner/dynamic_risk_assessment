@@ -22,7 +22,7 @@ def model_predictions(dataset):
         if file.endswith('.pkl'):
             model = pickle.load(open(os.getcwd()+'/'+prod_path+'/'+file,'rb'))
     predictions = model.predict(dataset)
-    return str(predictions)
+    return predictions
 
 ##################Function to get summary statistics
 def dataframe_summary():

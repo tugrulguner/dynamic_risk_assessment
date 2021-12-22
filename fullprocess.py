@@ -1,6 +1,8 @@
 import json
 import os
 import sys
+import pandas as pd
+from sklearn import metrics
 import training
 import scoring
 import deployment
@@ -38,15 +40,26 @@ if continue_pr == False:
 
 ##################Checking for model drift
 #check whether the score from the deployed model is different from the score from the model that uses the newest ingested data
+with open(os.getcwd()+'/'+prod_folder_path+'/'+'latestscore.txt') as f:
+  score = float(f.read().rsplit()[0])
 
-
+data = pd.read_csv(os.getcwd()+'/'+dataset_csv_path+'/'+'finaldata.csv')
+y = data.pop('exited').astype(int)
+X = data[['lastmonth_activity','lastyear_activity','number_of_employees']]
+predictions = diagnostics.model_predictions(X)
+# I will calculate the score here again, since scoring.py calculates the scores only with test data,
+# not with latest ingested data. We didn't desgin scoring.py to take predictions and actual y as an input.
+new_scores = metrics.f1_score(y, predictions)
 ##################Deciding whether to proceed, part 2
 #if you found model drift, you should proceed. otherwise, do end the process here
 
-
+if new_scores >= score:
+  sys.exit()
 
 ##################Re-deployment
 #if you found evidence for model drift, re-run the deployment.py script
+
+
 
 ##################Diagnostics and reporting
 #run diagnostics.py and reporting.py for the re-deployed model
