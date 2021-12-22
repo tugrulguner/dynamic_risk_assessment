@@ -1,8 +1,7 @@
 ## Process Automated Dynamic Risk Assessment Project
 
-This project aims to automate dynamic risk assessment process using continuous monitoring the
-ingested data, model, score to catch any model drift, data instability and integration issues
-on the way.
+This project aims to automate the dynamic risk assessment process using continuous monitoring of the ingested data, model, score to catch any model drift, data instability, and integration issues
+on the way by using live API for monitoring and diagnosis. The whole system is operated under an automation script that is run periodically.
 
 After setting the config.json with the proper path locations, which should be changed manually
 from initial data to source data when you allow system to receive inputs, data ingestion is performed.
@@ -36,7 +35,7 @@ Finally, fullprocess.py file acts as a maestro that drives this automation proce
 new input data to perform data ingestion. If there is any new input, it decides to perform ingestion or else stops 
 running the code. When it performs data ingestion, it uploads the latest model pickle file, performs prediction and 
 then calculates the new score. Here, again, script checks whether new score is higher than the current one or not.
-If it is higher, stops the executiono else, it decides there is a model drift and then executes training, scoring, 
+If it is higher, stops the execution, else, it decides there is a model drift and then executes training, scoring, 
 and deployment again. Finally, when these new model and score files are uploaded to production folder, it performs
 reporting, which saves confusion matrix into production folder, and finally apicalls again to monitor and diagnose
 the automated process.
