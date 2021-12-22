@@ -1,7 +1,7 @@
 ## Process Automated Dynamic Risk Assessment Project
 
 This project aims to automate the dynamic risk assessment process using continuous monitoring of the ingested data, model, score to catch any model drift, data instability, and integration issues
-on the way by using live API for monitoring and diagnosis. The whole system is operated under an automation script that is run periodically.
+on the way by using live API for monitoring and diagnosis. The whole system is operated under an automation script that runs periodically.
 
 After setting the config.json with the proper path locations, which should be changed manually
 from initial data to source data when you allow system to receive inputs, data ingestion is performed.
