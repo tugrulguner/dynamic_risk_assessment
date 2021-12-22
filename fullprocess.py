@@ -59,7 +59,8 @@ if new_scores >= score:
 ##################Re-deployment
 #if you found evidence for model drift, re-run the deployment.py script
 
-
+os.system('python traning.py')
+os.system('python deployment.py')
 
 ##################Diagnostics and reporting
 #run diagnostics.py and reporting.py for the re-deployed model

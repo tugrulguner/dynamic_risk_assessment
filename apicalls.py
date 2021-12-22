@@ -11,6 +11,8 @@ with open('config.json','r') as f:
     config = json.load(f) 
 
 test_data_path = os.path.join(config['test_data_path']) 
+output_model = os.path.join(config['output_model_path']) 
+
 path = json.dumps(os.getcwd()+'/'+test_data_path+'/'+'testdata.csv')
 #Call each API endpoint and store the responses
 response1 = requests.post(URL+'prediction', data=path).text
@@ -28,7 +30,7 @@ responses = [
   ]
 
 #write the responses to your workspace
-with open('responses.txt', 'w') as f:
+with open(os.getcwd()+'/'+output_model+'/'+'responses.txt', 'w') as f:
   for el in responses:
     f.write(el+'\n')
 
