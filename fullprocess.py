@@ -3,6 +3,7 @@ import os
 import sys
 import pandas as pd
 from sklearn import metrics
+import pickle
 import training
 import scoring
 import deployment
@@ -16,6 +17,7 @@ input_data_path = os.path.join(config['input_folder_path'])
 dataset_csv_path = os.path.join(config['output_folder_path']) 
 model_path = os.path.join(config['output_model_path'])
 prod_folder_path = os.path.join(config['prod_deployment_path']) 
+
 
 ##################Check and read new data
 with open(os.getcwd()+'/'+prod_folder_path+'/'+'ingestedfiles.txt','r') as f:
@@ -46,7 +48,10 @@ with open(os.getcwd()+'/'+prod_folder_path+'/'+'latestscore.txt') as f:
 data = pd.read_csv(os.getcwd()+'/'+dataset_csv_path+'/'+'finaldata.csv')
 y = data.pop('exited').astype(int)
 X = data[['lastmonth_activity','lastyear_activity','number_of_employees']]
-predictions = diagnostics.model_predictions(X)
+for file in os.listdir(os.getcwd()+'/'+prod_folder_path):
+    if file.endswith('.pkl'):
+        model = pickle.load(open(os.getcwd()+'/'+prod_folder_path+'/'+file,'rb'))
+predictions = model.predict(X)
 # I will calculate the score here again, since scoring.py calculates the scores only with test data,
 # not with latest ingested data. We didn't desgin scoring.py to take predictions and actual y as an input.
 new_scores = metrics.f1_score(y, predictions)
@@ -55,17 +60,17 @@ new_scores = metrics.f1_score(y, predictions)
 
 if new_scores >= score:
   sys.exit()
-
 ##################Re-deployment
 #if you found evidence for model drift, re-run the deployment.py script
 
-os.system('python traning.py')
+os.system('python training.py')
 os.system('python deployment.py')
 
 ##################Diagnostics and reporting
 #run diagnostics.py and reporting.py for the re-deployed model
 
-
+os.system('python reporting.py')
+os.system('python apicalls.py')
 
 
 

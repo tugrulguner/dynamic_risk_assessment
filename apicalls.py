@@ -20,7 +20,6 @@ response2 = requests.get(URL+'scoring').text
 response3 = requests.get(URL+'diagnostics').text
 response4 = requests.get(URL+'summarystats').text
 
-print(response1)
 #combine all API responses
 responses = [
   f'prediction is {response1}', 

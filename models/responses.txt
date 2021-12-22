@@ -1,0 +1,21 @@
+prediction is [0 1 1 0 1]
+Scoring is 0.3333333333333333
+Diagnostics is [2.179313381, 0.7735817100000002]
+Summary stats are [[lastmonth_activity     5625.923077
+lastyear_activity       763.538462
+number_of_employees     457.461538
+exited                    0.500000
+dtype: float64, lastmonth_activity     425.0
+lastyear_activity       97.5
+number_of_employees     99.0
+exited                   0.5
+dtype: float64, lastmonth_activity     19444.774621
+lastyear_activity       2016.609357
+number_of_employees      800.604833
+exited                     0.509902
+dtype: float64], corporation            0.0
+lastmonth_activity     0.0
+lastyear_activity      0.0
+number_of_employees    0.0
+exited                 0.0
+dtype: float64]

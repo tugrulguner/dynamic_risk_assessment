@@ -15,14 +15,15 @@ with open('config.json','r') as f:
 dataset_csv_path = os.path.join(config['output_folder_path']) 
 test_data_path = os.path.join(config['test_data_path'])
 prod_path = os.path.join(config['prod_deployment_path'])
+output_model = os.path.join(config['output_model_path'])
 
 ##################Function to get model predictions
 def model_predictions(dataset):
-    for file in os.listdir(os.getcwd()+'/'+prod_path):
+    for file in os.listdir(os.getcwd()+'/'+output_model):
         if file.endswith('.pkl'):
-            model = pickle.load(open(os.getcwd()+'/'+prod_path+'/'+file,'rb'))
+            model = pickle.load(open(os.getcwd()+'/'+output_model+'/'+file,'rb'))
     predictions = model.predict(dataset)
-    return predictions
+    return str(predictions)
 
 ##################Function to get summary statistics
 def dataframe_summary():
